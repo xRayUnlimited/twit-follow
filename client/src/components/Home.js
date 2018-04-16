@@ -7,7 +7,7 @@ import {
   spring,
   presets,
 } from 'react-motion';
-import Moved from './Moved'
+import Moved from './Moved';
 
 class Home extends Component {
   state = { x: 250, y: 300, followers: [], moved: [] }
@@ -20,15 +20,12 @@ class Home extends Component {
   }
 
   dropFollower = () => {
-    let follower = this.state.followers[0];
-    let followers = [
-      ...this.state.followers.slice(1),
-      ...this.state.followers.length
-    ]
+    const { moved, x, y } = this.state;
+    const [drop, ...followers] = this.state.followers;
     this.setState({
       followers,
-      moved: [...this.state.moved, follower]
-    })
+      moved: [...moved, { x, y, transitioned: false, ...drop}]
+    });
   }
 
   handleMouseMove = ({ pageX: x, pageY: y }) => {
@@ -51,7 +48,7 @@ class Home extends Component {
     const { moved } = this.state;
     const moveable = moved.filter( m => !m.transitioned )
     return moveable.map( follower => {
-      return <Moved {...follwer} key={follower.id} />
+      return <Moved {...follower} key={follower.id} />
     })
   }
 
