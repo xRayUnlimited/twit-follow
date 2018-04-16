@@ -1,3 +1,4 @@
+# class  top level doc comment
 class Api::FollowersController < ApplicationController
   before_action :client
 
