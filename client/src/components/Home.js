@@ -28,6 +28,15 @@ class Home extends Component {
     });
   }
 
+  addFollower = (id) => {
+    const { moved, followers } = this.state;
+    const follower = moved.find( f => f.id === id )
+    this.setState({
+      followers: [...followers, follower],
+      moved: moved.filter( m => m.id !== id )
+    })
+  }
+
   handleMouseMove = ({ pageX: x, pageY: y }) => {
     this.setState({ x, y })
   }
@@ -48,7 +57,13 @@ class Home extends Component {
     const { moved } = this.state;
     const moveable = moved.filter( m => !m.transitioned )
     return moveable.map( follower => {
-      return <Moved {...follower} key={follower.id} />
+      return (
+        <Moved 
+          {...follower} 
+          key={follower.id} 
+          addFollower={this.addFollower}
+        />
+      )
     })
   }
 

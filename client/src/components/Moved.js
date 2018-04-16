@@ -5,9 +5,13 @@ class Moved extends React.Component {
   state = { ...this.props }
 
   componentDidMount() {
-    setInterval( () => {
+    this.interval = setInterval( () => {
       this.moveAvatar()
     }, 100)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   moveAvatar = () => {
@@ -26,6 +30,7 @@ class Moved extends React.Component {
       <Motion key={id} defaultStyle={{x, y}} style={{x, y}}>
         { avatar =>
             <div
+              onClick={() => this.props.addFollower(id)}
               style={{
                 borderRadius: '99px',
                 backgroundColor: 'white',
